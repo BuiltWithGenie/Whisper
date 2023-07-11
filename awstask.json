@@ -1,70 +1,45 @@
 {
-    "family": "genie-task",
-    "taskRoleArn": "ecsTaskExecutionRole",
-    "networkMode": "bridge",
+    "family": "genie",
     "containerDefinitions": [
         {
             "name": "whisper",
-            "image": "whisper",
-            "cpu": 1024,
-            "memory": 2048,
+            "image": "pjgim/whisper",
+            "cpu": 0,
             "portMappings": [
                 {
+                    "name": "whisper-8000-tcp",
                     "containerPort": 8000,
                     "hostPort": 8000,
-                    "protocol": "tcp"
+                    "protocol": "tcp",
+                    "appProtocol": "http"
                 }
             ],
             "essential": true,
-            "environment": [
-                {
-                    "name": "JULIA_DEPOT_PATH",
-                    "value": "/home/genie/.julia"
-                },
-                {
-                    "name": "JULIA_REVISE",
-                    "value": "off"
-                },
-                {
-                    "name": "GENIE_ENV",
-                    "value": "prod"
-                },
-                {
-                    "name": "GENIE_HOST",
-                    "value": "0.0.0.0"
-                },
-                {
-                    "name": "PORT",
-                    "value": "8000"
-                },
-                {
-                    "name": "WSPORT",
-                    "value": "8000"
-                }
-            ],
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "genie-logs",
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/genie",
                     "awslogs-region": "us-east-1",
-                    "awslogs-stream-prefix": "genie"
+                    "awslogs-stream-prefix": "ecs"
                 }
-            },
-            "healthCheck": {
-                "command": [
-                    "CMD-SHELL",
-                    "curl -f http://localhost:8000 || exit 1"
-                ],
-                "interval": 30,
-                "timeout": 5,
-                "retries": 3,
-                "startPeriod": 0
             }
         }
     ],
+    "executionRoleArn": "arn:aws:iam::423888958564:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
     "requiresCompatibilities": [
-        "EC2"
+        "FARGATE"
     ],
-    "cpu": "1024",
-    "memory": "2048"
+    "cpu": "512",
+    "memory": "1024",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
 }
