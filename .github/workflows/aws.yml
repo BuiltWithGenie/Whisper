@@ -35,7 +35,7 @@ env:
   ECR_REPOSITORY: whisper           # set this to your Amazon ECR repository name
   ECS_SERVICE: genie                 # set this to your Amazon ECS service name
   ECS_CLUSTER: genie                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: /awstask.json # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: awstask.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: whisper           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition

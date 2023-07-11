@@ -5,7 +5,7 @@
     "containerDefinitions": [
         {
             "name": "whisper",
-            "image": "423888958564.dkr.ecr.us-east-1.amazonaws.com/whisper",
+            "image": "whisper",
             "cpu": 1024,
             "memory": 2048,
             "portMappings": [
