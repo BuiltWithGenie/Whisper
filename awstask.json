@@ -1,0 +1,70 @@
+{
+    "family": "genie-task",
+    "taskRoleArn": "ecsTaskExecutionRole",
+    "networkMode": "bridge",
+    "containerDefinitions": [
+        {
+            "name": "whisper",
+            "image": "public.ecr.aws/e8i2d7w8/whisper:latest",
+            "cpu": 1024,
+            "memory": 2048,
+            "portMappings": [
+                {
+                    "containerPort": 8000,
+                    "hostPort": 8000,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "JULIA_DEPOT_PATH",
+                    "value": "/home/genie/.julia"
+                },
+                {
+                    "name": "JULIA_REVISE",
+                    "value": "off"
+                },
+                {
+                    "name": "GENIE_ENV",
+                    "value": "prod"
+                },
+                {
+                    "name": "GENIE_HOST",
+                    "value": "0.0.0.0"
+                },
+                {
+                    "name": "PORT",
+                    "value": "8000"
+                },
+                {
+                    "name": "WSPORT",
+                    "value": "8000"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "genie-logs",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "genie"
+                }
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:8000 || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 0
+            }
+        }
+    ],
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "cpu": "1024",
+    "memory": "2048"
+}
