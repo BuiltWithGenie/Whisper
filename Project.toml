@@ -1,3 +1,6 @@
+version = "0.0.0"
+name = "Whisper"
+imgname = "whisper"
 [deps]
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 GenieFramework = "a59fdf5c-6bf0-4f5d-949c-a137c9e2f353"
